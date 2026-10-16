@@ -1,14 +1,13 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 320" width="100%" height="100%">
   <rect width="100%" height="100%" fill="#ffffff"/>
   <text x="30" y="30" font-family="'JetBrains Mono', Consolas, monospace" font-size="13" font-weight="bold" fill="#0f172a">FIG 2: BENCH PROTOTYPING ON SOLDERLESS BREADBOARD</text>
-  <text x="30" y="48" font-family="-apple-system, sans-serif" font-size="11" fill="#64748b">SOIC-8 adapter plugged into breadboard with long leaded capacitors & tie-point parasitic paths</text>
+  <text x="30" y="48" font-family="-apple-system, sans-serif" font-size="11" fill="#64748b">SOIC-8 adapter plugged into breadboard with long leaded capacitors &amp; tie-point parasitic paths</text>
 
   <!-- Breadboard Body -->
   <rect x="40" y="70" width="520" height="225" rx="6" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5"/>
-  <!-- Center Channel divider -->
   <rect x="40" y="170" width="520" height="15" fill="#e2e8f0"/>
 
-  <!-- Breadboard Tie-Point Grid Pattern (dots) -->
+  <!-- Breadboard Tie-Point Grid Pattern -->
   <g fill="#94a3b8">
     <circle cx="80" cy="95" r="3"/><circle cx="110" cy="95" r="3"/><circle cx="140" cy="95" r="3"/><circle cx="170" cy="95" r="3"/>
     <circle cx="80" cy="115" r="3"/><circle cx="110" cy="115" r="3"/><circle cx="140" cy="115" r="3"/><circle cx="170" cy="115" r="3"/>
@@ -42,7 +41,6 @@
   <rect x="380" y="140" width="15" height="75" rx="2" fill="#cbd5e1" stroke="#94a3b8"/>
 
   <!-- Leaded Capacitor plugged into breadboard for Pin 5 -->
-  <!-- Wire from Pin 5 (right side) to breadboard row -->
   <path d="M 395 190 Q 430 190 440 220" fill="none" stroke="#d97706" stroke-width="2.5"/>
   <circle cx="440" cy="220" r="5" fill="#f59e0b"/>
   <!-- Disc capacitor -->
@@ -52,7 +50,7 @@
   <line x1="490" y1="240" x2="510" y2="250" stroke="#64748b" stroke-width="1.5"/>
   <circle cx="510" cy="250" r="4" fill="#64748b"/>
 
-  <!-- Callout Red Arrows / Problem Annotations -->
+  <!-- Callout Red Annotations -->
   <rect x="360" y="78" width="190" height="42" rx="4" fill="#fef2f2" stroke="#fecaca"/>
   <text x="368" y="94" font-family="-apple-system, sans-serif" font-size="10" font-weight="bold" fill="#dc2626">⚠️ Breadboard Leakage Current</text>
   <text x="368" y="110" font-family="-apple-system, sans-serif" font-size="9" fill="#991b1b">Surface R &lt; 100MΩ shunts Pin 5 Trim/NR</text>

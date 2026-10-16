@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 320" width="100%" height="100%">
   <rect width="100%" height="100%" fill="#ffffff"/>
-  <text x="30" y="30" font-family="'JetBrains Mono', Consolas, monospace" font-size="13" font-weight="bold" fill="#0f172a">FIG 5: THE VERIFIED BENCH FIX & PROTOTYPING DESIGN RULES</text>
+  <text x="30" y="30" font-family="'JetBrains Mono', Consolas, monospace" font-size="13" font-weight="bold" fill="#0f172a">FIG 5: THE VERIFIED BENCH FIX &amp; PROTOTYPING DESIGN RULES</text>
   <text x="30" y="48" font-family="-apple-system, sans-serif" font-size="11" fill="#64748b">C11 DNP on breadboard eliminates leakage; C10 low-ESR restores phase margin</text>
 
   <!-- IC Symbol Box -->
@@ -18,7 +18,7 @@
   <text x="270" y="250" font-family="'JetBrains Mono', monospace" font-size="11" fill="#0f172a" text-anchor="middle">4 GND</text>
   <line x1="262" y1="285" x2="278" y2="285" stroke="#0f172a" stroke-width="2"/>
 
-  <!-- Pin 6: VOUT (Mandatory C10 highlighted in green) -->
+  <!-- Pin 6: VOUT -->
   <line x1="360" y1="120" x2="470" y2="120" stroke="#0f172a" stroke-width="2"/>
   <text x="320" y="124" font-family="'JetBrains Mono', monospace" font-size="11" fill="#0f172a">6 VOUT</text>
   <text x="480" y="124" font-family="'JetBrains Mono', monospace" font-size="13" font-weight="bold" fill="#059669">+4.5000V (STABLE)</text>
@@ -34,13 +34,11 @@
   <text x="430" y="195" font-family="-apple-system, sans-serif" font-size="9" fill="#15803d">ESR ≤ 1.5Ω</text>
   <line x1="402" y1="195" x2="418" y2="195" stroke="#0f172a" stroke-width="1.5"/>
 
-  <!-- Pin 5: TRIM/NR Marked DNP with Red Cross -->
+  <!-- Pin 5: TRIM/NR Marked DNP -->
   <line x1="360" y1="210" x2="460" y2="210" stroke="#0f172a" stroke-width="2"/>
   <text x="295" y="214" font-family="'JetBrains Mono', monospace" font-size="11" fill="#0f172a">5 TRIM/NR</text>
   
-  <!-- DNP Box with Red Cross -->
   <rect x="465" y="185" width="115" height="60" rx="4" fill="#fef2f2" stroke="#ef4444" stroke-dasharray="4 4" stroke-width="2"/>
-  <!-- Red X -->
   <line x1="480" y1="200" x2="505" y2="225" stroke="#dc2626" stroke-width="3"/>
   <line x1="505" y1="200" x2="480" y2="225" stroke="#dc2626" stroke-width="3"/>
   <text x="515" y="212" font-family="'JetBrains Mono', monospace" font-size="12" font-weight="bold" fill="#dc2626">DNP</text>
