@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 320" width="100%" height="100%">
+  <rect width="100%" height="100%" fill="#ffffff"/>
+  <text x="30" y="30" font-family="'JetBrains Mono', Consolas, monospace" font-size="13" font-weight="bold" fill="#0f172a">FIG 4: ROOT CAUSE ANALYSIS — HIGH-Z LEAKAGE PHYSICS</text>
+  <text x="30" y="48" font-family="-apple-system, sans-serif" font-size="11" fill="#64748b">Why tiny nanoamp leakage on Pin 5 (Trim/NR) creates massive millivolt errors</text>
+
+  <!-- Internal Silicon Boundary -->
+  <rect x="40" y="75" width="260" height="215" rx="6" fill="#f8fafc" stroke="#94a3b8" stroke-dasharray="4 4" stroke-width="1.5"/>
+  <text x="55" y="95" font-family="'JetBrains Mono', monospace" font-size="10" font-weight="bold" fill="#475569">INTERNAL SILICON (REF5045)</text>
+
+  <!-- Bandgap Core -->
+  <circle cx="100" cy="150" r="22" fill="#eff6ff" stroke="#2563eb" stroke-width="2"/>
+  <text x="100" y="154" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="bold" fill="#1e40af" text-anchor="middle">V_BG</text>
+
+  <!-- Internal High-Z Resistor R_int ~ 100k -->
+  <line x1="122" y1="150" x2="160" y2="150" stroke="#0f172a" stroke-width="2"/>
+  <!-- Resistor zigzag -->
+  <path d="M 160 150 L 165 140 L 175 160 L 185 140 L 195 160 L 205 140 L 210 150" fill="none" stroke="#d97706" stroke-width="2.5"/>
+  <text x="185" y="130" font-family="'JetBrains Mono', monospace" font-size="10" font-weight="bold" fill="#b45309" text-anchor="middle">R_int ≈ 100kΩ</text>
+  <line x1="210" y1="150" x2="300" y2="150" stroke="#0f172a" stroke-width="2"/>
+
+  <!-- Pin 5 Boundary -->
+  <circle cx="300" cy="150" r="6" fill="#f59e0b" stroke="#0f172a" stroke-width="2"/>
+  <text x="300" y="138" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="bold" fill="#0f172a" text-anchor="middle">PIN 5</text>
+  <text x="300" y="172" font-family="-apple-system, sans-serif" font-size="9" fill="#64748b" text-anchor="middle">(Trim/NR)</text>
+
+  <!-- External Board Leakage Paths -->
+  <line x1="306" y1="150" x2="410" y2="150" stroke="#ef4444" stroke-width="2"/>
+  <polygon points="360,146 375,150 360,154" fill="#ef4444"/>
+  <text x="365" y="140" font-family="'JetBrains Mono', monospace" font-size="10" font-weight="bold" fill="#dc2626" text-anchor="middle">I_leakage</text>
+
+  <!-- Leaky Capacitor / Breadboard resistance to GND -->
+  <!-- R_leakage -->
+  <line x1="410" y1="150" x2="410" y2="180" stroke="#ef4444" stroke-width="2"/>
+  <path d="M 410 180 L 400 185 L 420 195 L 400 205 L 420 215 L 400 225 L 410 230" fill="none" stroke="#ef4444" stroke-width="2"/>
+  <text x="445" y="208" font-family="'JetBrains Mono', monospace" font-size="10" fill="#dc2626">R_leakage</text>
+  <text x="445" y="222" font-family="-apple-system, sans-serif" font-size="9" fill="#991b1b">(Capacitor IR +</text>
+  <text x="445" y="234" font-family="-apple-system, sans-serif" font-size="9" fill="#991b1b">Breadboard flux)</text>
+  <line x1="410" y1="230" x2="410" y2="255" stroke="#ef4444" stroke-width="2"/>
+  <!-- GND -->
+  <line x1="400" y1="255" x2="420" y2="255" stroke="#0f172a" stroke-width="2"/>
+  <line x1="404" y1="259" x2="416" y2="259" stroke="#0f172a" stroke-width="1.5"/>
+
+  <!-- Formula Callout Box on Right -->
+  <rect x="330" y="80" width="235" height="48" rx="4" fill="#fffbeb" stroke="#fde68a"/>
+  <text x="340" y="98" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="bold" fill="#b45309">ΔV_error = I_leak × R_int</text>
+  <text x="340" y="115" font-family="-apple-system, sans-serif" font-size="10" fill="#78350f">1µA leakage × 100kΩ = 100 mV drop!</text>
+</svg>

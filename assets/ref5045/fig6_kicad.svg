@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 340" width="100%" height="100%">
+  <rect width="100%" height="100%" fill="#ffffff"/>
+  <text x="30" y="28" font-family="'JetBrains Mono', Consolas, monospace" font-size="13" font-weight="bold" fill="#0f172a">FIG 6: FINAL KICAD PROJECT IMPLEMENTATION (L1_ANALOG)</text>
+  <text x="30" y="44" font-family="-apple-system, sans-serif" font-size="11" fill="#64748b">Schematic capture showing engineering annotations directly documented on hardware CAD</text>
+
+  <!-- Blue KiCad Section Frame -->
+  <rect x="25" y="60" width="550" height="260" fill="#fcfcfd" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="50" y="85" font-family="'JetBrains Mono', monospace" font-size="14" font-weight="bold" fill="#1e40af">REF 4.5 Volt</text>
+
+  <!-- Power rail arrows -->
+  <path d="M 120 115 L 120 100 L 115 105 M 120 100 L 125 105" stroke="#16a34a" stroke-width="2" fill="none"/>
+  <text x="130" y="105" font-family="'JetBrains Mono', monospace" font-size="10" fill="#16a34a">+5.2VLDD</text>
+
+  <path d="M 400 115 L 400 100 L 395 105 M 400 100 L 405 105" stroke="#16a34a" stroke-width="2" fill="none"/>
+  <text x="410" y="105" font-family="'JetBrains Mono', monospace" font-size="10" fill="#16a34a">+4.5Vref</text>
+
+  <!-- U2 Symbol -->
+  <rect x="180" y="115" width="140" height="95" fill="#fefce8" stroke="#ca8a04" stroke-width="1.5"/>
+  <text x="250" y="132" font-family="-apple-system, sans-serif" font-size="11" font-weight="bold" fill="#854d0e" text-anchor="middle">U2 REF5045AD</text>
+  
+  <text x="185" y="152" font-family="'JetBrains Mono', monospace" font-size="9" fill="#854d0e">2 Vin</text>
+  <text x="185" y="172" font-family="'JetBrains Mono', monospace" font-size="9" fill="#854d0e">3 Temp</text>
+  <text x="185" y="192" font-family="'JetBrains Mono', monospace" font-size="9" fill="#854d0e">4 GND</text>
+
+  <text x="275" y="152" font-family="'JetBrains Mono', monospace" font-size="9" fill="#854d0e">6 Vout</text>
+  <text x="260" y="175" font-family="'JetBrains Mono', monospace" font-size="9" fill="#854d0e">5 Trim/NR</text>
+
+  <!-- Blue Dashed Box around C11 (Trim/NR) -->
+  <rect x="330" y="162" width="75" height="50" fill="none" stroke="#2563eb" stroke-dasharray="4 3" stroke-width="1.5"/>
+  <text x="350" y="176" font-family="'JetBrains Mono', monospace" font-size="9" fill="#1e40af">C11 1uF</text>
+
+  <!-- Red Dashed Box around C10 (Vout) -->
+  <rect x="405" y="138" width="75" height="50" fill="none" stroke="#dc2626" stroke-dasharray="4 3" stroke-width="1.5"/>
+  <text x="420" y="154" font-family="'JetBrains Mono', monospace" font-size="9" fill="#991b1b">C10 10uF</text>
+
+  <!-- Annotations Text Block inside KiCad -->
+  <text x="35" y="235" font-family="'JetBrains Mono', monospace" font-size="8.5" fill="#2563eb">Note for C11 (1uF Trim/NR):</text>
+  <text x="35" y="247" font-family="'JetBrains Mono', monospace" font-size="8" fill="#475569">- For Breadboard/THT prototyping: Use only low-leakage C0G/X7R. If not available, LEAVE DNP.</text>
+  <text x="35" y="258" font-family="'JetBrains Mono', monospace" font-size="8" fill="#475569">- If Vref output fluctuates or shows settling issues: Remove C11 first.</text>
+
+  <text x="35" y="278" font-family="'JetBrains Mono', monospace" font-size="8.5" fill="#dc2626">CRITICAL Note for C10 (10uF Vout Capacitor):</text>
+  <text x="35" y="290" font-family="'JetBrains Mono', monospace" font-size="8" fill="#dc2626">- MANDATORY COMPONENT: Required for internal loop stability. DO NOT OMIT.</text>
+  <text x="35" y="301" font-family="'JetBrains Mono', monospace" font-size="8" fill="#475569">- If Vref drops under load, verify C10 is connected with low ESR &lt;= 1.5Ω close to IC.</text>
+</svg>

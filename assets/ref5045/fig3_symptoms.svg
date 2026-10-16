@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 320" width="100%" height="100%">
+  <rect width="100%" height="100%" fill="#ffffff"/>
+  <text x="30" y="30" font-family="'JetBrains Mono', Consolas, monospace" font-size="13" font-weight="bold" fill="#0f172a">FIG 3: OBSERVED BENCH MEASUREMENTS & FAILURE SYMPTOMS</text>
+  <text x="30" y="48" font-family="-apple-system, sans-serif" font-size="11" fill="#64748b">Comparison between nominal expected performance and real breadboard anomalies</text>
+
+  <!-- Left: Multimeter readings -->
+  <!-- Expected DMM -->
+  <rect x="40" y="80" width="240" height="95" rx="6" fill="#f0fdf4" stroke="#86efac" stroke-width="1.5"/>
+  <text x="55" y="104" font-family="-apple-system, sans-serif" font-size="11" font-weight="bold" fill="#166534">EXPECTED OUTPUT (DATASHEET)</text>
+  <rect x="55" y="115" width="210" height="42" rx="4" fill="#0f172a"/>
+  <text x="160" y="145" font-family="'JetBrains Mono', monospace" font-size="22" font-weight="bold" fill="#4ade80" text-anchor="middle">4.5000 V</text>
+
+  <!-- Measured DMM (Failure) -->
+  <rect x="40" y="195" width="240" height="95" rx="6" fill="#fef2f2" stroke="#fca5a5" stroke-width="1.5"/>
+  <text x="55" y="219" font-family="-apple-system, sans-serif" font-size="11" font-weight="bold" fill="#991b1b">MEASURED ON BREADBOARD (WITH C11)</text>
+  <rect x="55" y="230" width="210" height="42" rx="4" fill="#0f172a"/>
+  <text x="160" y="260" font-family="'JetBrains Mono', monospace" font-size="22" font-weight="bold" fill="#f87171" text-anchor="middle">4.3820 V</text>
+  <text x="40" y="305" font-family="-apple-system, sans-serif" font-size="11" font-weight="bold" fill="#dc2626">❌ Severe Error: -118 mV Offset (-2.6% error!)</text>
+
+  <!-- Right: Oscilloscope Screen -->
+  <rect x="310" y="80" width="250" height="185" rx="6" fill="#0f172a" stroke="#334155" stroke-width="2"/>
+  <!-- Scope Grid -->
+  <path d="M 310 126 H 560 M 310 172 H 560 M 310 218 H 560 M 372 80 V 265 M 435 80 V 265 M 497 80 V 265" stroke="#1e293b" stroke-width="1"/>
+  
+  <!-- Waveform 1: Oscillation when C10 omitted or high ESR (Red) -->
+  <path d="M 320 172 Q 330 130 340 172 T 360 172 T 380 172 T 400 172 T 420 172 T 440 172 T 460 172 T 480 172 T 500 172 T 520 172 T 540 172" fill="none" stroke="#f43f5e" stroke-width="2.5"/>
+  <!-- Waveform 2: Stable flat line when C10 10uF present (Green) -->
+  <line x1="320" y1="126" x2="550" y2="126" stroke="#10b981" stroke-width="2"/>
+
+  <!-- Scope Legends -->
+  <circle cx="330" cy="100" r="4" fill="#10b981"/>
+  <text x="340" y="103" font-family="'JetBrains Mono', monospace" font-size="9" fill="#a7f3d0">CH1: With C10 (Stable DC 4.5V)</text>
+
+  <circle cx="330" cy="245" r="4" fill="#f43f5e"/>
+  <text x="340" y="248" font-family="'JetBrains Mono', monospace" font-size="9" fill="#fecdd3">CH2: C10 Omitted (250kHz Ringing)</text>
+
+  <text x="310" y="295" font-family="-apple-system, sans-serif" font-size="11" font-weight="bold" fill="#d97706">⚠️ C10 Omission = Phase Margin &lt; 0° (Oscillation)</text>
+</svg>

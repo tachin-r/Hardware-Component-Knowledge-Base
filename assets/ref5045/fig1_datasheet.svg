@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 320" width="100%" height="100%">
+  <rect width="100%" height="100%" fill="#ffffff"/>
+  <!-- Title / Figure Header -->
+  <text x="30" y="30" font-family="'JetBrains Mono', Consolas, monospace" font-size="13" font-weight="bold" fill="#0f172a">FIG 1: TI DATASHEET STANDARD APPLICATION CIRCUIT</text>
+  <text x="30" y="48" font-family="-apple-system, sans-serif" font-size="11" fill="#64748b">Theoretical recommendation for lowest broadband noise (REF5045 Datasheet Section 9.2)</text>
+  
+  <!-- IC Symbol Box -->
+  <rect x="200" y="80" width="180" height="180" rx="4" fill="#f8fafc" stroke="#0f172a" stroke-width="2"/>
+  <text x="290" y="115" font-family="-apple-system, sans-serif" font-size="16" font-weight="bold" fill="#0f172a" text-anchor="middle">REF5045</text>
+  <text x="290" y="135" font-family="-apple-system, sans-serif" font-size="11" fill="#64748b" text-anchor="middle">Precision 4.5V Reference</text>
+  
+  <!-- Pins -->
+  <!-- Pin 2: VIN -->
+  <line x1="120" y1="120" x2="200" y2="120" stroke="#0f172a" stroke-width="2"/>
+  <text x="208" y="124" font-family="'JetBrains Mono', monospace" font-size="11" fill="#0f172a">2 VIN</text>
+  <text x="110" y="115" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="bold" fill="#2563eb">+5.2V</text>
+  
+  <!-- C_IN (1uF) -->
+  <line x1="150" y1="120" x2="150" y2="170" stroke="#0f172a" stroke-width="1.5"/>
+  <line x1="140" y1="170" x2="160" y2="170" stroke="#0f172a" stroke-width="2"/>
+  <line x1="140" y1="175" x2="160" y2="175" stroke="#0f172a" stroke-width="2"/>
+  <line x1="150" y1="175" x2="150" y2="210" stroke="#0f172a" stroke-width="1.5"/>
+  <text x="165" y="176" font-family="-apple-system, sans-serif" font-size="11" fill="#334155">1µF</text>
+  <!-- GND symbol -->
+  <line x1="142" y1="210" x2="158" y2="210" stroke="#0f172a" stroke-width="2"/>
+  <line x1="146" y1="214" x2="154" y2="214" stroke="#0f172a" stroke-width="1.5"/>
+  <line x1="148" y1="218" x2="152" y2="218" stroke="#0f172a" stroke-width="1"/>
+
+  <!-- Pin 4: GND -->
+  <line x1="290" y1="260" x2="290" y2="290" stroke="#0f172a" stroke-width="2"/>
+  <text x="290" y="250" font-family="'JetBrains Mono', monospace" font-size="11" fill="#0f172a" text-anchor="middle">4 GND</text>
+  <line x1="282" y1="290" x2="298" y2="290" stroke="#0f172a" stroke-width="2"/>
+  <line x1="286" y1="294" x2="294" y2="294" stroke="#0f172a" stroke-width="1.5"/>
+  <line x1="288" y1="298" x2="292" y2="298" stroke="#0f172a" stroke-width="1"/>
+
+  <!-- Pin 6: VOUT -->
+  <line x1="380" y1="120" x2="480" y2="120" stroke="#0f172a" stroke-width="2"/>
+  <text x="340" y="124" font-family="'JetBrains Mono', monospace" font-size="11" fill="#0f172a">6 VOUT</text>
+  <text x="490" y="124" font-family="'JetBrains Mono', monospace" font-size="12" font-weight="bold" fill="#059669">+4.500V</text>
+
+  <!-- C_OUT (10uF) -->
+  <line x1="430" y1="120" x2="430" y2="170" stroke="#0f172a" stroke-width="1.5"/>
+  <line x1="420" y1="170" x2="440" y2="170" stroke="#0f172a" stroke-width="2"/>
+  <line x1="420" y1="175" x2="440" y2="175" stroke="#0f172a" stroke-width="2"/>
+  <line x1="430" y1="175" x2="430" y2="210" stroke="#0f172a" stroke-width="1.5"/>
+  <text x="445" y="176" font-family="-apple-system, sans-serif" font-size="11" fill="#334155">10µF</text>
+  <line x1="422" y1="210" x2="438" y2="210" stroke="#0f172a" stroke-width="2"/>
+  <line x1="426" y1="214" x2="434" y2="214" stroke="#0f172a" stroke-width="1.5"/>
+  <line x1="428" y1="218" x2="432" y2="218" stroke="#0f172a" stroke-width="1"/>
+
+  <!-- Pin 5: TRIM / NR -->
+  <line x1="380" y1="200" x2="520" y2="200" stroke="#0f172a" stroke-width="2"/>
+  <text x="315" y="204" font-family="'JetBrains Mono', monospace" font-size="11" fill="#0f172a">5 TRIM/NR</text>
+
+  <!-- C_NR (1uF) -->
+  <line x1="520" y1="200" x2="520" y2="230" stroke="#0f172a" stroke-width="1.5"/>
+  <line x1="510" y1="230" x2="530" y2="230" stroke="#0f172a" stroke-width="2"/>
+  <line x1="510" y1="235" x2="530" y2="235" stroke="#0f172a" stroke-width="2"/>
+  <line x1="520" y1="235" x2="520" y2="260" stroke="#0f172a" stroke-width="1.5"/>
+  <text x="535" y="236" font-family="-apple-system, sans-serif" font-size="11" fill="#d97706" font-weight="bold">C_NR (1µF)</text>
+  <text x="535" y="250" font-family="-apple-system, sans-serif" font-size="9" fill="#64748b">Noise Reduction Cap</text>
+  <line x1="512" y1="260" x2="528" y2="260" stroke="#0f172a" stroke-width="2"/>
+  <line x1="516" y1="264" x2="524" y2="264" stroke="#0f172a" stroke-width="1.5"/>
+  <line x1="518" y1="268" x2="522" y2="268" stroke="#0f172a" stroke-width="1"/>
+</svg>

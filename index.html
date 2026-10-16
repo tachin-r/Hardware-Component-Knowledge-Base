@@ -3,254 +3,313 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Hardware Component Knowledge Base & Lab Gotchas</title>
-  <meta name="description" content="Clean empirical hardware engineering knowledge base, component pitfalls, and real-world circuit gotchas discovered through laboratory prototyping.">
+  <title>Hardware Lab Notes: Empirical Engineering & Circuit Gotchas</title>
+  <meta name="description" content="Step-by-step laboratory prototyping investigations, analog precision gotchas, and empirical bench findings.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <!-- Header / Navigation -->
+  <!-- Header -->
   <header class="app-header">
     <div class="header-container">
       <div class="brand">
-        <div class="brand-icon">
-          <span>⚡</span>
-        </div>
-        <div class="brand-text">
-          <h1 class="brand-title">Hardware Component Knowledge Base</h1>
-          <p class="brand-subtitle">Empirical Analog & Precision Hardware Notes</p>
+        <div class="brand-badge">LAB LOG</div>
+        <div>
+          <h1 class="brand-title">Hardware Engineering Notes</h1>
+          <p class="brand-subtitle">Empirical Analog Design & Prototyping Investigations</p>
         </div>
       </div>
 
-      <div class="header-actions">
-        <button id="open-add-modal" class="btn btn-primary" title="Record a newly discovered hardware gotcha">
-          <span>➕</span> Add Component / Board
-        </button>
-        <button id="open-export-modal" class="btn btn-secondary" title="Export knowledge base to Markdown report">
-          <span>📑</span> Export Markdown
-        </button>
-        <a href="https://github.com/tachin-r/Hardware-Component-Knowledge-Base" target="_blank" rel="noopener" class="btn btn-ghost github-link" title="View Source on GitHub">
+      <nav class="header-nav">
+        <button id="tab-case-study" class="nav-btn active">📖 Case Study: REF5045</button>
+        <button id="tab-catalog" class="nav-btn">🗂️ Component Index</button>
+        <a href="https://github.com/tachin-r/Hardware-Component-Knowledge-Base" target="_blank" rel="noopener" class="nav-btn btn-ghost" title="GitHub Repository">
           <svg class="gh-svg" viewBox="0 0 16 16" width="16" height="16" fill="currentColor">
             <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path>
           </svg>
           GitHub
         </a>
-      </div>
+      </nav>
     </div>
   </header>
 
-  <!-- Main Container -->
+  <!-- Main View Area -->
   <main class="main-content">
-    <!-- Stats Row -->
-    <section class="stats-banner">
-      <div class="stat-card">
-        <span class="stat-value" id="stat-total-parts">0</span>
-        <span class="stat-label">Documented Parts & Boards</span>
-      </div>
-      <div class="stat-card">
-        <span class="stat-value highlight-amber" id="stat-total-gotchas">0</span>
-        <span class="stat-label">Documented Gotchas</span>
-      </div>
-      <div class="stat-card">
-        <span class="stat-value highlight-cyan" id="stat-bench-verified">100%</span>
-        <span class="stat-label">Bench Verified Findings</span>
-      </div>
-      <div class="stat-card">
-        <span class="stat-value highlight-emerald">4</span>
-        <span class="stat-label">KiCad Modular Boards</span>
-      </div>
-    </section>
+    
+    <!-- VIEW 1: IN-DEPTH ENGINEERING CASE STUDY (REF5045) -->
+    <article id="view-case-study" class="view-panel active">
+      <!-- Article Header -->
+      <div class="case-header">
+        <div class="case-meta-top">
+          <span class="meta-tag tag-danger">Bench Investigation</span>
+          <span class="meta-tag">Pyranometer Project • L1_Analog</span>
+          <span class="meta-date">October 2026</span>
+        </div>
+        <h2 class="case-title">REF5045: Prototyping Investigation & Capacitor Traps (C10 Stability vs C11 Leakage)</h2>
+        <p class="case-summary">
+          How building the recommended Texas Instruments datasheet circuit on a solderless breadboard resulted in a 118 mV reference drop and feedback loop oscillation — and the exact empirical rules discovered to stabilize the circuit.
+        </p>
 
-    <!-- Search & Filters Toolbar -->
-    <section class="toolbar-section">
-      <div class="search-box">
-        <span class="search-icon">🔍</span>
-        <input type="text" id="search-input" placeholder="Search by part number (e.g. REF5045, ADS1220), symptom, or keyword..." autocomplete="off">
-        <span class="search-shortcut">/</span>
-        <button id="clear-search" class="clear-btn" style="display: none;">✕</button>
-      </div>
-
-      <div class="category-filters" id="category-filters">
-        <!-- Populated by JS -->
-      </div>
-
-      <div class="tags-row">
-        <span class="tags-label">Tags:</span>
-        <div class="tag-pills" id="tag-filters">
-          <!-- Populated by JS -->
+        <div class="spec-table-row">
+          <div class="spec-cell">
+            <span class="spec-k">Component</span>
+            <span class="spec-v">TI REF5045AD</span>
+          </div>
+          <div class="spec-cell">
+            <span class="spec-k">Nominal Output</span>
+            <span class="spec-v">4.500 V ± 0.05%</span>
+          </div>
+          <div class="spec-cell">
+            <span class="spec-k">Temp Drift</span>
+            <span class="spec-v">3 ppm/°C</span>
+          </div>
+          <div class="spec-cell">
+            <span class="spec-k">Measured on Bench</span>
+            <span class="spec-v text-danger">4.382 V (Failed with C11)</span>
+          </div>
+          <div class="spec-cell">
+            <span class="spec-k">Verified Fix</span>
+            <span class="spec-v text-success">4.500 V (C11 DNP)</span>
+          </div>
         </div>
       </div>
-    </section>
 
-    <!-- Components Grid -->
-    <section class="components-grid-section">
-      <div class="section-meta">
-        <h2 class="section-title">Components & Hardware Boards</h2>
-        <span class="results-count" id="results-count">Showing all components</span>
-      </div>
+      <!-- Step-by-Step Investigation Process -->
+      <div class="process-steps">
 
-      <div class="components-grid" id="components-grid">
-        <!-- Rendered dynamically by app.js -->
-      </div>
-
-      <div id="no-results" class="no-results-state" style="display: none;">
-        <span class="empty-icon">🔎</span>
-        <h3>No matching components found</h3>
-        <p>Try searching for a different keyword or resetting your filters.</p>
-        <button id="reset-filters-btn" class="btn btn-secondary" style="margin-top: 0.75rem;">Reset Filters</button>
-      </div>
-    </section>
-  </main>
-
-  <!-- Detailed Component Drawer / Modal -->
-  <div id="detail-modal" class="modal-backdrop" aria-hidden="true">
-    <div class="modal-card detail-modal-card" role="dialog" aria-modal="true">
-      <button class="modal-close-btn" id="close-detail-modal" aria-label="Close modal">✕</button>
-      <div id="detail-modal-body">
-        <!-- Populated dynamically by app.js -->
-      </div>
-    </div>
-  </div>
-
-  <!-- Add New Gotcha Modal -->
-  <div id="add-modal" class="modal-backdrop" aria-hidden="true">
-    <div class="modal-card form-modal-card" role="dialog" aria-modal="true">
-      <button class="modal-close-btn" id="close-add-modal" aria-label="Close modal">✕</button>
-      <div class="modal-header">
-        <h2 class="modal-title">Add Component or Hardware Board ⚡</h2>
-        <p class="modal-subtitle">Record lab findings, hardware gotchas, and upload photos of chips/boards.</p>
-      </div>
-
-      <form id="add-gotcha-form" class="gotcha-form">
-        <div class="form-grid-2">
-          <div class="form-group">
-            <label for="form-part-number">Part Number / Board Name <span class="required">*</span></label>
-            <input type="text" id="form-part-number" placeholder="e.g. OPA189, L1_Analog Board" required>
-          </div>
-          <div class="form-group">
-            <label for="form-manufacturer">Manufacturer / Project</label>
-            <input type="text" id="form-manufacturer" placeholder="e.g. Texas Instruments, Custom PCB">
-          </div>
-        </div>
-
-        <div class="form-grid-3">
-          <div class="form-group">
-            <label for="form-category">Category <span class="required">*</span></label>
-            <select id="form-category" required>
-              <option value="Voltage Reference">Voltage Reference</option>
-              <option value="ADC">ADC</option>
-              <option value="Op-Amp / TIA">Op-Amp / TIA</option>
-              <option value="Power Supply">Power Supply</option>
-              <option value="Sensors">Sensors</option>
-              <option value="Microcontroller">Microcontroller</option>
-              <option value="Custom Board">Custom Board / PCB</option>
-              <option value="Other">Other</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label for="form-package">Package / Form Factor</label>
-            <input type="text" id="form-package" placeholder="e.g. SOIC-8, Circular 45mm PCB">
-          </div>
-          <div class="form-group">
-            <label for="form-severity">Gotcha Severity</label>
-            <select id="form-severity">
-              <option value="Critical">🔴 Critical (Circuit Failure / Oscillation)</option>
-              <option value="High">🟠 High (Measurement Error / Heavy Drift)</option>
-              <option value="Warning">🟡 Warning (Subtle Offset / Noise)</option>
-              <option value="Info">🔵 Info (Best Practice Note)</option>
-            </select>
-          </div>
-        </div>
-
-        <!-- Image Upload Section -->
-        <div class="form-group">
-          <label>Component / Board Photo (Optional)</label>
-          <div class="image-upload-wrapper">
-            <input type="file" id="form-image-file" accept="image/*" class="file-input">
-            <input type="url" id="form-image-url" placeholder="Or enter an image URL (e.g. https://... or assets/...)">
-            <div class="image-preview-box" id="form-image-preview">
-              <span class="image-preview-placeholder">No image selected</span>
+        <!-- STEP 1 -->
+        <section class="step-card">
+          <div class="step-header">
+            <span class="step-num">01</span>
+            <div class="step-heading">
+              <h3 class="step-title">The Datasheet Circuit (Theoretical Application)</h3>
+              <p class="step-subtitle">What Texas Instruments recommends on paper for low-noise instrumentation.</p>
             </div>
           </div>
-        </div>
+          
+          <div class="step-body">
+            <p>
+              According to the REF5045 datasheet (Section 9.2), configuring the device for maximum noise suppression requires two critical external capacitors:
+            </p>
+            <ul class="bullet-list">
+              <li><strong>Output Capacitor (C_OUT = 10µF):</strong> Recommended to filter transients and maintain output buffer loop stability.</li>
+              <li><strong>Noise Reduction Capacitor (C_NR = 1µF):</strong> Connected between Pin 5 (Trim/NR) and GND to form a low-pass filter with the internal bandgap resistance, cutting broadband noise down to 3 µVp-p.</li>
+            </ul>
 
-        <div class="form-group">
-          <label for="form-summary">Summary & Function <span class="required">*</span></label>
-          <input type="text" id="form-summary" placeholder="Brief function and application overview..." required>
-        </div>
-
-        <fieldset class="form-fieldset">
-          <legend>The Trap / Gotcha Details</legend>
-          <div class="form-group">
-            <label for="form-gotcha-title">Trap Title <span class="required">*</span></label>
-            <input type="text" id="form-gotcha-title" placeholder="e.g. Loop Instability on Low ESR, Output Leakage Drift" required>
+            <div class="figure-container">
+              <img src="assets/ref5045/fig1_datasheet.svg" alt="Figure 1: Datasheet Recommended Circuit" class="diagram-img">
+              <figcaption class="fig-caption"><strong>Figure 1:</strong> The ideal application schematic as documented in the official manufacturer datasheet.</figcaption>
+            </div>
           </div>
+        </section>
 
-          <div class="form-group">
-            <label for="form-symptom">Observed Symptom (What went wrong on bench?) <span class="required">*</span></label>
-            <textarea id="form-symptom" rows="2" placeholder="e.g. Reference voltage drops to 4.3V, 24-bit readings fluctuate with 100mV ripple..." required></textarea>
+        <!-- STEP 2 -->
+        <section class="step-card">
+          <div class="step-header">
+            <span class="step-num">02</span>
+            <div class="step-heading">
+              <h3 class="step-title">The Real Bench Setup (Solderless Breadboard)</h3>
+              <p class="step-subtitle">Proving the circuit concept on bench prior to manufacturing custom PCB.</p>
+            </div>
           </div>
+          
+          <div class="step-body">
+            <p>
+              To validate the circuit before ordering the 4-layer PCB for the Pyranometer L1_Analog board, the circuit was constructed on a standard solderless breadboard.
+            </p>
+            <ul class="bullet-list">
+              <li>The surface-mount SOIC-8 REF5045 was mounted onto a breadboard breakout adapter board with 2.54mm header pins.</li>
+              <li>Standard through-hole 1µF multi-layer ceramic (MLCC) capacitor was plugged into the breadboard tie-points for Pin 5 (Trim/NR).</li>
+              <li>A 10µF through-hole capacitor was placed across Pin 6 (Vout) and Pin 4 (GND).</li>
+              <li>Powered with a clean +5.2V LDO bench rail.</li>
+            </ul>
 
-          <div class="form-group">
-            <label for="form-root-cause">Root Cause (Physics & Analog explanation) <span class="required">*</span></label>
-            <textarea id="form-root-cause" rows="2" placeholder="e.g. Internal high-impedance node conducts surface leakage current, degrading phase margin..." required></textarea>
+            <div class="figure-container">
+              <img src="assets/ref5045/fig2_breadboard.svg" alt="Figure 2: Real Bench Breadboard Setup" class="diagram-img">
+              <figcaption class="fig-caption"><strong>Figure 2:</strong> Prototyping setup on solderless breadboard showing tie-point parasitics and stray leakage paths.</figcaption>
+            </div>
           </div>
+        </section>
 
-          <div class="form-group">
-            <label for="form-fix">The Verified Fix & Design Rule <span class="required">*</span></label>
-            <textarea id="form-fix" rows="2" placeholder="e.g. DNP on breadboard, use mandatory 10uF X7R with ESR <= 1.5 ohm..." required></textarea>
+        <!-- STEP 3 -->
+        <section class="step-card highlight-danger">
+          <div class="step-header">
+            <span class="step-num text-danger">03</span>
+            <div class="step-heading">
+              <h3 class="step-title">The Empirical Failure (What Went Wrong?)</h3>
+              <p class="step-subtitle">Two severe, unexpected anomalies observed during bench testing.</p>
+            </div>
           </div>
-        </fieldset>
+          
+          <div class="step-body">
+            <p>
+              When power was applied and measured on a calibrated 6.5-digit digital multimeter, the circuit immediately failed to meet its 4.500V specification:
+            </p>
 
-        <div class="form-grid-2">
-          <div class="form-group">
-            <label for="form-bb-advice">Breadboard Prototyping Rule</label>
-            <textarea id="form-bb-advice" rows="2" placeholder="What to do differently on breadboard vs PCB..."></textarea>
+            <div class="anomaly-box">
+              <h4 class="anomaly-title">🔴 Anomaly 1: The Trim/NR (C11) Voltage Drop Trap</h4>
+              <p>
+                Instead of the expected <strong>4.500 V</strong>, the output voltage registered only <strong>4.382 V</strong> (a massive drop of <strong>-118 mV</strong> or ~2.6% error). Furthermore, the voltage drifted significantly when breathing over the breadboard or touching nearby tie-points.
+              </p>
+            </div>
+
+            <div class="anomaly-box">
+              <h4 class="anomaly-title">🔴 Anomaly 2: The Output (C10) Loop Oscillation Trap</h4>
+              <p>
+                When attempting to test without C10 or when using flying jumper wires to an electrolytic capacitor, the output developed an continuous <strong>250 kHz oscillation</strong> with hundreds of millivolts of ripple. The 24-bit ADC readings fluctuated uncontrollably.
+              </p>
+            </div>
+
+            <div class="figure-container">
+              <img src="assets/ref5045/fig3_symptoms.svg" alt="Figure 3: Observed Measurements & Waveforms" class="diagram-img">
+              <figcaption class="fig-caption"><strong>Figure 3:</strong> Measured DMM comparison showing -118 mV offset and oscilloscope capture of loop oscillation.</figcaption>
+            </div>
           </div>
-          <div class="form-group">
-            <label for="form-pcb-advice">PCB Layout Design Rule</label>
-            <textarea id="form-pcb-advice" rows="2" placeholder="Ground plane, trace routing, decoupling cap placement..."></textarea>
+        </section>
+
+        <!-- STEP 4 -->
+        <section class="step-card">
+          <div class="step-header">
+            <span class="step-num">04</span>
+            <div class="step-heading">
+              <h3 class="step-title">Root Cause Investigation & Physics</h3>
+              <p class="step-subtitle">Understanding why the theoretical circuit broke down under bench physics.</p>
+            </div>
           </div>
-        </div>
+          
+          <div class="step-body">
+            <p>
+              Investigating the internal silicon architecture of the REF5045 revealed why these phenomena occurred:
+            </p>
 
-        <div class="form-group">
-          <label for="form-tags">Tags (comma separated)</label>
-          <input type="text" id="form-tags" placeholder="#LoopStability, #CapacitorLeakage, #BreadboardTrap">
-        </div>
+            <h4 class="subhead">1. The High-Impedance Node Trap (Pin 5 Trim/NR)</h4>
+            <p>
+              Pin 5 does not connect to a low-impedance buffer. Instead, it connects directly into an internal thin-film resistor divider with an internal impedance of:
+            </p>
+            <div class="formula-card">
+              <code>R_int ≈ 100 kΩ to 1 MΩ</code>
+            </div>
+            <p>
+              On a solderless breadboard, humidity, flux residue, and phenolic plastic insulation resistance is typically only $10^8 \Omega$ to $10^9 \Omega$. When combined with the finite Insulation Resistance (IR) of general-purpose ceramic capacitors:
+            </p>
+            <div class="formula-card">
+              <code>ΔV_error = I_leakage × R_int</code>
+              <p style="margin-top: 0.35rem; font-size: 0.85rem; color: #64748b;">
+                A minute leakage of just 1.18 µA across the capacitor dielectric and breadboard tie-points creates an immediate:
+                <br><strong>1.18 µA × 100 kΩ = 118 mV drop!</strong>
+              </p>
+            </div>
 
-        <div class="form-actions">
-          <button type="button" class="btn btn-ghost" id="cancel-add-btn">Cancel</button>
-          <button type="submit" class="btn btn-primary">Save to Knowledge Base</button>
-        </div>
-      </form>
-    </div>
-  </div>
+            <h4 class="subhead">2. Output Buffer Closed-Loop Phase Margin (Pin 6 Vout)</h4>
+            <p>
+              The internal op-amp output buffer is specifically designed with pole-zero compensation that requires a load capacitance of $1\mu\text{F} \le C_{OUT} \le 50\mu\text{F}$ and an Equivalent Series Resistance of $\text{ESR} \le 1.5\Omega$. Without this specific damping pole, the feedback loop phase margin drops below 0°, inducing spontaneous Barkhausen oscillation.
+            </p>
 
-  <!-- Export Markdown Modal -->
-  <div id="export-modal" class="modal-backdrop" aria-hidden="true">
-    <div class="modal-card export-modal-card" role="dialog" aria-modal="true">
-      <button class="modal-close-btn" id="close-export-modal" aria-label="Close modal">✕</button>
-      <div class="modal-header">
-        <h2 class="modal-title">Export Knowledge Base Report 📑</h2>
-        <p class="modal-subtitle">Copy formatted Markdown for technical reports, lab notebooks, or GitHub READMEs.</p>
+            <div class="figure-container">
+              <img src="assets/ref5045/fig4_physics.svg" alt="Figure 4: Root Cause Physics & Equivalent Circuit" class="diagram-img">
+              <figcaption class="fig-caption"><strong>Figure 4:</strong> Equivalent schematic showing the high-Z internal resistor and leakage shunting path to ground.</figcaption>
+            </div>
+          </div>
+        </section>
+
+        <!-- STEP 5 -->
+        <section class="step-card highlight-success">
+          <div class="step-header">
+            <span class="step-num text-success">05</span>
+            <div class="step-heading">
+              <h3 class="step-title">The Verified Bench Fix & Prototyping Rules</h3>
+              <p class="step-subtitle">Two simple, concrete engineering rules established from this test.</p>
+            </div>
+          </div>
+          
+          <div class="step-body">
+            <div class="rules-grid">
+              <div class="rule-card rule-danger">
+                <span class="rule-badge">RULE 1 (Pin 5 Trim/NR)</span>
+                <h4 class="rule-title">LEAVE DNP ON BREADBOARDS</h4>
+                <p class="rule-desc">
+                  On breadboards, <strong>Do Not Populate (DNP) C11</strong>. Leaving Pin 5 open-circuit immediately eliminated all leakage, restoring the output to an exact <strong>4.5000 V</strong>. Only add C11 on final PCB if using C0G/NPO ultra-low-leakage dielectric and clean, flux-free board.
+                </p>
+              </div>
+
+              <div class="rule-card rule-success">
+                <span class="rule-badge">RULE 2 (Pin 6 Vout)</span>
+                <h4 class="rule-title">C10 (10µF) IS MANDATORY</h4>
+                <p class="rule-desc">
+                  <strong>Never omit C10</strong>, even for a quick 5-second sanity check. Use a 10µF X7R ceramic with ESR ≤ 1.5Ω soldered with minimal lead length directly across Pin 6 and Pin 4 (GND) to guarantee feedback stability.
+                </p>
+              </div>
+            </div>
+
+            <div class="figure-container">
+              <img src="assets/ref5045/fig5_verified_fix.svg" alt="Figure 5: The Verified Bench Fix" class="diagram-img">
+              <figcaption class="fig-caption"><strong>Figure 5:</strong> Verified circuit configuration ensuring stability and eliminating leakage offset.</figcaption>
+            </div>
+          </div>
+        </section>
+
+        <!-- STEP 6 -->
+        <section class="step-card">
+          <div class="step-header">
+            <span class="step-num">06</span>
+            <div class="step-heading">
+              <h3 class="step-title">Implementation in KiCad Hardware CAD</h3>
+              <p class="step-subtitle">Encoding lab discoveries permanently onto the project schematic.</p>
+            </div>
+          </div>
+          
+          <div class="step-body">
+            <p>
+              To ensure no engineer or student repeats this mistake, the exact findings were permanently integrated into the <strong>Pyranometer L1_Analog KiCad schematic</strong>:
+            </p>
+            <ul class="bullet-list">
+              <li><strong>Blue dashed box</strong> around C11 (1µF): Explicitly marking it as DNP for breadboard testing.</li>
+              <li><strong>Red dashed box</strong> around C10 (10µF): Highlighting it as a MANDATORY loop stability component.</li>
+            </ul>
+
+            <div class="figure-container">
+              <img src="assets/ref5045/fig6_kicad.svg" alt="Figure 6: KiCad Project Schematic Implementation" class="diagram-img">
+              <figcaption class="fig-caption"><strong>Figure 6:</strong> Actual schematic capture from Pyranometer_Over_engineering L1_Analog.</figcaption>
+            </div>
+
+            <div class="kicanvas-cta-box">
+              <div>
+                <h4 style="font-size: 1.05rem; font-weight: 700; color: #0f172a;">Inspect Live KiCad Schematic on KiCanvas</h4>
+                <p style="font-size: 0.88rem; color: #475569; margin-top: 0.2rem;">
+                  Open the real hardware board in your browser to inspect the complete L1_Analog circuit and PCB routing.
+                </p>
+              </div>
+              <a href="https://kicanvas.org/?github=https://github.com/tachin-r/Pyranometer_Over_engineering/tree/main/L1_Analog" target="_blank" rel="noopener" class="btn btn-primary">
+                🚀 Open L1_Analog in KiCanvas
+              </a>
+            </div>
+          </div>
+        </section>
+
+      </div>
+    </article>
+
+    <!-- VIEW 2: COMPONENT & BOARD INDEX -->
+    <article id="view-catalog" class="view-panel" style="display: none;">
+      <div class="catalog-header">
+        <h2 class="section-title">Hardware Components & Board Index</h2>
+        <p class="section-subtitle">Catalog of components documented in laboratory experiments.</p>
       </div>
 
-      <div class="export-actions-bar">
-        <button id="copy-markdown-btn" class="btn btn-primary">📋 Copy to Clipboard</button>
-        <button id="download-markdown-btn" class="btn btn-secondary">💾 Download .md File</button>
+      <div class="catalog-grid" id="catalog-grid">
+        <!-- Rendered by app.js -->
       </div>
+    </article>
 
-      <textarea id="export-textarea" class="export-textarea" readonly rows="16"></textarea>
-    </div>
-  </div>
+  </main>
 
   <!-- Footer -->
   <footer class="app-footer">
     <div class="footer-container">
-      <p><strong>Hardware Component Knowledge Base & Lab Gotchas Portal</strong></p>
-      <p class="footer-sub">Simple, clean engineering notebook for practical hardware design insights.</p>
+      <p><strong>Hardware Engineering Lab Notes & Empirical Prototyping Log</strong></p>
+      <p class="footer-sub">A living document of bench phenomena, analog design caveats, and verified fixes.</p>
     </div>
   </footer>
 
