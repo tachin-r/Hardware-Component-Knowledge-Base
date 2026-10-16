@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hardware Component Knowledge Base & Lab Gotchas Portal ⚡🔬</title>
+  <meta name="description" content="Empirical hardware engineering knowledge base, component pitfalls, and real-world circuit gotchas discovered through laboratory prototyping.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Header / Navigation -->
+  <header class="app-header">
+    <div class="header-container">
+      <div class="brand">
+        <div class="brand-icon">
+          <span class="icon-pulse">⚡</span>
+        </div>
+        <div class="brand-text">
+          <h1 class="brand-title">HARDWARE <span class="gradient-text">GOTCHAS</span> & LAB NOTES</h1>
+          <p class="brand-subtitle">Empirical Analog & Precision Hardware Knowledge Base</p>
+        </div>
+      </div>
+
+      <div class="header-actions">
+        <button id="open-add-modal" class="btn btn-primary" title="Record a newly discovered hardware gotcha">
+          <span class="btn-icon">➕</span> Record New Gotcha
+        </button>
+        <button id="open-export-modal" class="btn btn-secondary" title="Export knowledge base to Markdown report">
+          <span class="btn-icon">📑</span> Export Markdown
+        </button>
+        <a href="https://github.com/tachin-r/Hardware-Component-Knowledge-Base" target="_blank" rel="noopener" class="btn btn-ghost github-link" title="View Source on GitHub">
+          <svg class="gh-svg" viewBox="0 0 16 16" width="18" height="18" fill="currentColor">
+            <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path>
+          </svg>
+          GitHub
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <main class="main-content">
+    <!-- Hero / Quick Stats -->
+    <section class="stats-banner">
+      <div class="stat-card">
+        <span class="stat-value" id="stat-total-parts">0</span>
+        <span class="stat-label">Verified Components</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-value highlight-amber" id="stat-total-gotchas">0</span>
+        <span class="stat-label">Documented Gotchas</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-value highlight-cyan" id="stat-bench-verified">100%</span>
+        <span class="stat-label">Bench Tested Findings</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-value highlight-emerald">4</span>
+        <span class="stat-label">KiCad Modular Boards</span>
+      </div>
+    </section>
+
+    <!-- Search & Filters Toolbar -->
+    <section class="toolbar-section">
+      <div class="search-box">
+        <span class="search-icon">🔍</span>
+        <input type="text" id="search-input" placeholder="Search by part number (e.g. REF5045, ADS1220), symptom, or keyword..." autocomplete="off">
+        <span class="search-shortcut">/</span>
+        <button id="clear-search" class="clear-btn" style="display: none;">✕</button>
+      </div>
+
+      <div class="filters-row">
+        <div class="category-filters" id="category-filters">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+
+      <div class="tags-row">
+        <span class="tags-label">Tags:</span>
+        <div class="tag-pills" id="tag-filters">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Components Grid -->
+    <section class="components-grid-section">
+      <div class="section-meta">
+        <h2 class="section-title">Component Knowledge Catalog</h2>
+        <span class="results-count" id="results-count">Showing all components</span>
+      </div>
+
+      <div class="components-grid" id="components-grid">
+        <!-- Rendered dynamically by app.js -->
+      </div>
+
+      <div id="no-results" class="no-results-state" style="display: none;">
+        <span class="empty-icon">🔎</span>
+        <h3>No matching components found</h3>
+        <p>Try searching for a different keyword, part number, or clearing your filters.</p>
+        <button id="reset-filters-btn" class="btn btn-secondary">Reset Filters</button>
+      </div>
+    </section>
+  </main>
+
+  <!-- Detailed Component Drawer / Modal -->
+  <div id="detail-modal" class="modal-backdrop" aria-hidden="true">
+    <div class="modal-card detail-modal-card" role="dialog" aria-modal="true">
+      <button class="modal-close-btn" id="close-detail-modal" aria-label="Close modal">✕</button>
+      <div id="detail-modal-body">
+        <!-- Populated dynamically by app.js -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Add New Gotcha Modal -->
+  <div id="add-modal" class="modal-backdrop" aria-hidden="true">
+    <div class="modal-card form-modal-card" role="dialog" aria-modal="true">
+      <button class="modal-close-btn" id="close-add-modal" aria-label="Close modal">✕</button>
+      <div class="modal-header">
+        <h2 class="modal-title">Record New Hardware Gotcha ⚡</h2>
+        <p class="modal-subtitle">Add empirical bench findings to your local & long-term knowledge base.</p>
+      </div>
+
+      <form id="add-gotcha-form" class="gotcha-form">
+        <div class="form-grid-2">
+          <div class="form-group">
+            <label for="form-part-number">Part Number <span class="required">*</span></label>
+            <input type="text" id="form-part-number" placeholder="e.g. OPA189, TPS7A4700" required>
+          </div>
+          <div class="form-group">
+            <label for="form-manufacturer">Manufacturer</label>
+            <input type="text" id="form-manufacturer" placeholder="e.g. Texas Instruments, Analog Devices">
+          </div>
+        </div>
+
+        <div class="form-grid-3">
+          <div class="form-group">
+            <label for="form-category">Category <span class="required">*</span></label>
+            <select id="form-category" required>
+              <option value="Voltage Reference">Voltage Reference</option>
+              <option value="ADC">ADC</option>
+              <option value="Op-Amp / TIA">Op-Amp / TIA</option>
+              <option value="Power Supply">Power Supply</option>
+              <option value="Sensors">Sensors</option>
+              <option value="Microcontroller">Microcontroller</option>
+              <option value="Passive">Passive / Discrete</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="form-package">Package</label>
+            <input type="text" id="form-package" placeholder="e.g. SOIC-8, TSSOP-16, 0805">
+          </div>
+          <div class="form-group">
+            <label for="form-severity">Gotcha Severity</label>
+            <select id="form-severity">
+              <option value="Critical">🔴 Critical (Circuit Failure / Loop Instability)</option>
+              <option value="High">🟠 High (Measurement Error / Heavy Drift)</option>
+              <option value="Warning">🟡 Warning (Subtle Offset / Noise)</option>
+              <option value="Info">🔵 Info (Best Practice Note)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="form-summary">Component Summary <span class="required">*</span></label>
+          <input type="text" id="form-summary" placeholder="Brief function and application overview..." required>
+        </div>
+
+        <fieldset class="form-fieldset">
+          <legend>The Trap / Gotcha Details</legend>
+          <div class="form-group">
+            <label for="form-gotcha-title">Trap Title <span class="required">*</span></label>
+            <input type="text" id="form-gotcha-title" placeholder="e.g. Loop Instability on Low ESR, Output Leakage Drift" required>
+          </div>
+
+          <div class="form-group">
+            <label for="form-symptom">Observed Symptom (What went wrong on bench?) <span class="required">*</span></label>
+            <textarea id="form-symptom" rows="2" placeholder="e.g. Reference voltage drops to 4.3V, 24-bit readings fluctuate with 100mV ripple..." required></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="form-root-cause">Root Cause (Physics & Analog explanation) <span class="required">*</span></label>
+            <textarea id="form-root-cause" rows="2" placeholder="e.g. Internal high-impedance node conducts surface leakage current, degrading phase margin..." required></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="form-fix">The Verified Fix & Design Rule <span class="required">*</span></label>
+            <textarea id="form-fix" rows="2" placeholder="e.g. DNP on breadboard, use mandatory 10uF X7R with ESR <= 1.5 ohm..." required></textarea>
+          </div>
+        </fieldset>
+
+        <div class="form-grid-2">
+          <div class="form-group">
+            <label for="form-bb-advice">Breadboard Prototyping Rule</label>
+            <textarea id="form-bb-advice" rows="2" placeholder="What to do differently on breadboard vs PCB..."></textarea>
+          </div>
+          <div class="form-group">
+            <label for="form-pcb-advice">PCB Layout Design Rule</label>
+            <textarea id="form-pcb-advice" rows="2" placeholder="Ground plane, trace routing, decoupling cap placement..."></textarea>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="form-tags">Tags (comma separated)</label>
+          <input type="text" id="form-tags" placeholder="#LoopStability, #CapacitorLeakage, #BreadboardTrap">
+        </div>
+
+        <div class="form-actions">
+          <button type="button" class="btn btn-ghost" id="cancel-add-btn">Cancel</button>
+          <button type="submit" class="btn btn-primary">Save to Knowledge Base 💾</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Export Markdown Modal -->
+  <div id="export-modal" class="modal-backdrop" aria-hidden="true">
+    <div class="modal-card export-modal-card" role="dialog" aria-modal="true">
+      <button class="modal-close-btn" id="close-export-modal" aria-label="Close modal">✕</button>
+      <div class="modal-header">
+        <h2 class="modal-title">Export Knowledge Base Report 📑</h2>
+        <p class="modal-subtitle">Copy formatted Markdown for technical reports, lab notebooks, or GitHub READMEs.</p>
+      </div>
+
+      <div class="export-actions-bar">
+        <button id="copy-markdown-btn" class="btn btn-primary">📋 Copy to Clipboard</button>
+        <button id="download-markdown-btn" class="btn btn-secondary">💾 Download .md File</button>
+      </div>
+
+      <textarea id="export-textarea" class="export-textarea" readonly rows="16"></textarea>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="app-footer">
+    <div class="footer-container">
+      <p>⚡ <strong>Hardware Component Knowledge Base & Lab Gotchas Portal</strong></p>
+      <p class="footer-sub">Created for Empirical Analog, Power & Mixed-Signal Engineering R&D.</p>
+    </div>
+  </footer>
+
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
