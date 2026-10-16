@@ -1,9 +1,9 @@
-// Hardware Component Knowledge Base App Logic
+// Hardware Component Knowledge Base App Logic (Clean Light Theme with Image Support)
 
 (function() {
   'use strict';
 
-  const STORAGE_KEY = "hw_gotchas_custom_components_v1";
+  const STORAGE_KEY = "hw_gotchas_custom_components_v2";
 
   // State
   let customComponents = [];
@@ -20,6 +20,7 @@
   let searchQuery = "";
   let activeCategory = "All";
   let activeTag = null;
+  let currentUploadedImage = "";
 
   // DOM Elements
   const searchInput = document.getElementById("search-input");
@@ -45,6 +46,9 @@
   const closeAddModalBtn = document.getElementById("close-add-modal");
   const cancelAddBtn = document.getElementById("cancel-add-btn");
   const addGotchaForm = document.getElementById("add-gotcha-form");
+  const formImageFile = document.getElementById("form-image-file");
+  const formImageUrl = document.getElementById("form-image-url");
+  const formImagePreview = document.getElementById("form-image-preview");
 
   // Export Modal
   const exportModal = document.getElementById("export-modal");
@@ -130,15 +134,12 @@
   // Filter Components
   function getFilteredComponents() {
     return allComponents.filter(c => {
-      // Category filter
       if (activeCategory !== "All" && c.category !== activeCategory) {
         return false;
       }
-      // Tag filter
       if (activeTag && (!c.tags || !c.tags.includes(activeTag))) {
         return false;
       }
-      // Search query
       if (searchQuery.trim() !== "") {
         const q = searchQuery.toLowerCase().trim();
         const partMatch = (c.partNumber || "").toLowerCase().includes(q);
@@ -186,57 +187,64 @@
       const severityClass = c.severity === "Critical" ? "badge-critical" : 
                             c.severity === "High" ? "badge-high" : "badge-info";
       
-      const gotchasCount = c.gotchas ? c.gotchas.length : 0;
       const firstGotcha = c.gotchas && c.gotchas[0] ? c.gotchas[0] : null;
 
-      const tagsHtml = (c.tags || []).slice(0, 4).map(t => 
+      const tagsHtml = (c.tags || []).slice(0, 3).map(t => 
         `<span class="tag-pill" data-tag="${escapeHtml(t)}">${escapeHtml(t)}</span>`
       ).join("");
 
       return `
         <article class="component-card" data-id="${escapeHtml(c.id)}">
-          <div class="card-top">
-            <div class="part-title-group">
-              <h3 class="part-number">${escapeHtml(c.partNumber)}</h3>
-              <span class="part-mfr">${escapeHtml(c.manufacturer || "Generic")}</span>
+          ${c.image ? `
+            <div class="card-media" title="Click to view details">
+              <img src="${escapeHtml(c.image)}" alt="${escapeHtml(c.partNumber)}" loading="lazy">
             </div>
-            <div class="card-badges">
-              <span class="badge ${severityClass}">⚠️ ${escapeHtml(c.severity || "Warning")}</span>
-              ${c.status ? `<span class="badge badge-status">✓ ${escapeHtml(c.status)}</span>` : ''}
+          ` : `
+            <div class="card-media" style="background: #f1f5f9; color: #94a3b8; font-size: 2rem;">
+              <span>⚡</span>
             </div>
-          </div>
+          `}
 
-          <div class="card-specs-row">
-            ${c.category ? `<span class="spec-chip">🏷️ ${escapeHtml(c.category)}</span>` : ''}
-            ${c.package ? `<span class="spec-chip">📦 ${escapeHtml(c.package)}</span>` : ''}
-            ${c.rating ? `<span class="spec-chip">⚡ ${escapeHtml(c.rating)}</span>` : ''}
-          </div>
-
-          <p class="card-summary">${escapeHtml(c.summary || "")}</p>
-
-          ${firstGotcha ? `
-            <div class="card-gotchas-box">
-              <span class="card-gotchas-title">⚡ Documented Gotcha (${gotchasCount})</span>
-              <div class="gotcha-item-preview">
-                <strong>${escapeHtml(firstGotcha.title)}</strong>
-                <span>${escapeHtml(firstGotcha.symptom)}</span>
+          <div class="card-body">
+            <div class="card-top">
+              <div class="part-title-group">
+                <h3 class="part-number">${escapeHtml(c.partNumber)}</h3>
+                <span class="part-mfr">${escapeHtml(c.manufacturer || "Generic")}</span>
               </div>
+              <span class="badge ${severityClass}">⚠️ ${escapeHtml(c.severity || "Warning")}</span>
             </div>
-          ` : ''}
 
-          <div class="card-tags">
-            ${tagsHtml}
-          </div>
+            <div class="card-specs-row">
+              ${c.category ? `<span class="spec-chip">🏷️ ${escapeHtml(c.category)}</span>` : ''}
+              ${c.package ? `<span class="spec-chip">📦 ${escapeHtml(c.package)}</span>` : ''}
+              ${c.rating ? `<span class="spec-chip">⚡ ${escapeHtml(c.rating)}</span>` : ''}
+            </div>
 
-          <div class="card-actions">
-            <button class="btn btn-secondary btn-card-inspect inspect-btn" data-id="${escapeHtml(c.id)}">
-              🔍 Inspect Full Profile
-            </button>
-            ${c.projectRef ? `
-              <a href="${escapeHtml(c.projectRef.url)}" target="_blank" rel="noopener" class="btn-kicanvas" title="Open Interactive KiCanvas viewer">
-                🚀 KiCanvas
-              </a>
+            <p class="card-summary">${escapeHtml(c.summary || "")}</p>
+
+            ${firstGotcha ? `
+              <div class="card-gotchas-box">
+                <span class="card-gotchas-title">⚠️ ${escapeHtml(firstGotcha.title)}</span>
+                <div class="gotcha-item-preview">
+                  <span>${escapeHtml(firstGotcha.symptom)}</span>
+                </div>
+              </div>
             ` : ''}
+
+            <div class="card-tags">
+              ${tagsHtml}
+            </div>
+
+            <div class="card-actions">
+              <button class="btn btn-secondary btn-card-inspect inspect-btn" data-id="${escapeHtml(c.id)}">
+                🔍 Details
+              </button>
+              ${c.projectRef ? `
+                <a href="${escapeHtml(c.projectRef.url)}" target="_blank" rel="noopener" class="btn-kicanvas" title="Open KiCanvas Circuit">
+                  🚀 KiCanvas
+                </a>
+              ` : ''}
+            </div>
           </div>
         </article>
       `;
@@ -253,20 +261,20 @@
 
     const gotchasHtml = (comp.gotchas || []).map(g => `
       <div class="gotcha-detail-card">
-        <h4 class="gotcha-detail-title">⚡ ${escapeHtml(g.title)}</h4>
+        <h4 class="gotcha-detail-title">⚠️ ${escapeHtml(g.title)}</h4>
         
         <div class="gotcha-block">
-          <span class="gotcha-label">⚠️ Observed Symptom</span>
+          <span class="gotcha-label">Observed Symptom</span>
           <p class="gotcha-text">${escapeHtml(g.symptom)}</p>
         </div>
 
         <div class="gotcha-block">
-          <span class="gotcha-label">🔬 Physics & Root Cause</span>
+          <span class="gotcha-label">Root Cause & Physics</span>
           <p class="gotcha-text">${escapeHtml(g.rootCause)}</p>
         </div>
 
         <div class="gotcha-block gotcha-fix-block">
-          <span class="gotcha-label" style="color: var(--accent-emerald);">🟢 Verified Fix & Rule</span>
+          <span class="gotcha-label">Verified Fix & Rule</span>
           <p class="gotcha-text">${escapeHtml(g.fix)}</p>
         </div>
       </div>
@@ -280,14 +288,14 @@
             <tr>
               <th>Pin</th>
               <th>Name</th>
-              <th>Circuit Function & Crucial Note</th>
+              <th>Function / Connection</th>
             </tr>
           </thead>
           <tbody>
             ${comp.pinout.map(p => `
               <tr>
                 <td class="pin-num">${escapeHtml(p.pin)}</td>
-                <td class="pin-name">${escapeHtml(p.name)}</td>
+                <td style="font-family: var(--font-mono); font-weight: 600;">${escapeHtml(p.name)}</td>
                 <td>${escapeHtml(p.role)}</td>
               </tr>
             `).join("")}
@@ -301,11 +309,11 @@
         <h3 class="detail-section-title">🧪 Bench Prototyping Rules</h3>
         <div class="advice-comparison-grid">
           <div class="advice-card">
-            <h4 class="advice-title" style="color: var(--accent-amber);">🥖 Breadboard Prototyping Rule</h4>
+            <h4 class="advice-title" style="color: #b45309;">🥖 Breadboard Prototyping Rule</h4>
             <p class="advice-text">${escapeHtml(comp.prototypingAdvice.breadboard || "No specific breadboard warnings.")}</p>
           </div>
           <div class="advice-card">
-            <h4 class="advice-title" style="color: var(--accent-cyan);">🟢 Final PCB Layout Rule</h4>
+            <h4 class="advice-title" style="color: var(--primary);">🟢 Final PCB Layout Rule</h4>
             <p class="advice-text">${escapeHtml(comp.prototypingAdvice.pcb || "Standard PCB layout practices apply.")}</p>
           </div>
         </div>
@@ -313,28 +321,34 @@
     ` : '';
 
     const projectRefHtml = comp.projectRef ? `
-      <div class="detail-section" style="background: rgba(0, 242, 254, 0.05); border: 1px solid rgba(0, 242, 254, 0.2); border-radius: var(--radius-md); padding: 1rem 1.25rem;">
+      <div class="detail-section" style="background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: var(--radius-md); padding: 1rem 1.25rem;">
         <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.75rem;">
           <div>
-            <h4 style="font-family: var(--font-heading); font-size: 1rem; color: var(--accent-cyan);">🔗 Real Project Circuit: ${escapeHtml(comp.projectRef.name)}</h4>
-            <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.2rem;">View the active KiCad schematic and PCB layout for this exact component implementation.</p>
+            <h4 style="font-family: var(--font-heading); font-size: 0.95rem; color: #166534;">🔗 Project Circuit: ${escapeHtml(comp.projectRef.name)}</h4>
+            <p style="font-size: 0.85rem; color: #15803d; margin-top: 0.15rem;">View the active KiCad schematic and board layout in KiCanvas.</p>
           </div>
           <a href="${escapeHtml(comp.projectRef.url)}" target="_blank" rel="noopener" class="btn btn-primary" style="font-size: 0.82rem;">
-            🚀 Open in KiCanvas Viewer
+            🚀 Open KiCanvas Viewer
           </a>
         </div>
       </div>
     ` : '';
 
     detailModalBody.innerHTML = `
+      ${comp.image ? `
+        <div class="detail-top-image">
+          <img src="${escapeHtml(comp.image)}" alt="${escapeHtml(comp.partNumber)}">
+        </div>
+      ` : ''}
+
       <div class="detail-header-block">
         <div>
           <h2 class="detail-part-name">${escapeHtml(comp.partNumber)}</h2>
-          <p style="color: var(--text-muted); font-size: 0.95rem;">${escapeHtml(comp.manufacturer || "Generic")} • ${escapeHtml(comp.package || "")} • ${escapeHtml(comp.rating || "")}</p>
-          <div class="detail-badges-row">
+          <p style="color: var(--text-muted); font-size: 0.92rem; margin-top: 0.2rem;">${escapeHtml(comp.manufacturer || "Generic")} • ${escapeHtml(comp.package || "")} • ${escapeHtml(comp.rating || "")}</p>
+          <div style="display: flex; gap: 0.4rem; margin-top: 0.6rem; flex-wrap: wrap;">
             <span class="badge ${severityClass}">⚠️ ${escapeHtml(comp.severity || "Warning")}</span>
-            <span class="badge badge-status">✓ ${escapeHtml(comp.status || "Documented")}</span>
             <span class="spec-chip">🏷️ ${escapeHtml(comp.category || "General")}</span>
+            ${comp.status ? `<span class="spec-chip">✓ ${escapeHtml(comp.status)}</span>` : ''}
           </div>
         </div>
       </div>
@@ -367,6 +381,8 @@
 
   // Add Gotcha Modal Handlers
   function openAddModal() {
+    currentUploadedImage = "";
+    formImagePreview.innerHTML = '<span class="image-preview-placeholder">No image selected</span>';
     addModal.classList.add("open");
     addModal.setAttribute("aria-hidden", "false");
     document.body.style.overflow = "hidden";
@@ -382,7 +398,7 @@
   // Export Modal Handlers
   function generateMarkdown() {
     let md = `# Hardware Component Knowledge Base & Lab Gotchas Report\n\n`;
-    md += `*Generated automatically from Hardware Gotchas & Lab Notes Portal*\n\n`;
+    md += `*Generated automatically from Hardware Component Knowledge Base*\n\n`;
     md += `Total Components: ${allComponents.length}\n\n`;
     md += `---\n\n`;
 
@@ -471,7 +487,7 @@
       renderGrid();
     });
 
-    // Tag click inside component card
+    // Grid clicks
     componentsGridEl.addEventListener("click", e => {
       const pill = e.target.closest(".tag-pill");
       if (pill) {
@@ -505,6 +521,32 @@
       renderCategoryFilters();
       renderTagFilters();
       renderGrid();
+    });
+
+    // File input change for image upload
+    formImageFile.addEventListener("change", e => {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = ev => {
+        currentUploadedImage = ev.target.result;
+        formImagePreview.innerHTML = `<img src="${currentUploadedImage}" alt="Uploaded Preview">`;
+        formImageUrl.value = ""; // clear URL input if file is chosen
+      };
+      reader.readAsDataURL(file);
+    });
+
+    // Image URL input change
+    formImageUrl.addEventListener("input", e => {
+      const url = e.target.value.trim();
+      if (url) {
+        currentUploadedImage = url;
+        formImagePreview.innerHTML = `<img src="${escapeHtml(url)}" alt="URL Preview" onerror="this.src=''; this.alt='Failed to load image';">`;
+      } else {
+        currentUploadedImage = "";
+        formImagePreview.innerHTML = '<span class="image-preview-placeholder">No image selected</span>';
+      }
     });
 
     // Modal close buttons
@@ -584,6 +626,7 @@
         category: category,
         package: pkg || "N/A",
         rating: "Custom Bench Finding",
+        image: currentUploadedImage || "",
         tags: tags.length > 0 ? tags : ["#BenchFinding"],
         status: "Lab Verified",
         severity: severity,

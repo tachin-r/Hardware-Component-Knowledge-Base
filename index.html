@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Hardware Component Knowledge Base & Lab Gotchas Portal ⚡🔬</title>
-  <meta name="description" content="Empirical hardware engineering knowledge base, component pitfalls, and real-world circuit gotchas discovered through laboratory prototyping.">
+  <title>Hardware Component Knowledge Base & Lab Gotchas</title>
+  <meta name="description" content="Clean empirical hardware engineering knowledge base, component pitfalls, and real-world circuit gotchas discovered through laboratory prototyping.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -16,23 +16,23 @@
     <div class="header-container">
       <div class="brand">
         <div class="brand-icon">
-          <span class="icon-pulse">⚡</span>
+          <span>⚡</span>
         </div>
         <div class="brand-text">
-          <h1 class="brand-title">HARDWARE <span class="gradient-text">GOTCHAS</span> & LAB NOTES</h1>
-          <p class="brand-subtitle">Empirical Analog & Precision Hardware Knowledge Base</p>
+          <h1 class="brand-title">Hardware Component Knowledge Base</h1>
+          <p class="brand-subtitle">Empirical Analog & Precision Hardware Notes</p>
         </div>
       </div>
 
       <div class="header-actions">
         <button id="open-add-modal" class="btn btn-primary" title="Record a newly discovered hardware gotcha">
-          <span class="btn-icon">➕</span> Record New Gotcha
+          <span>➕</span> Add Component / Board
         </button>
         <button id="open-export-modal" class="btn btn-secondary" title="Export knowledge base to Markdown report">
-          <span class="btn-icon">📑</span> Export Markdown
+          <span>📑</span> Export Markdown
         </button>
         <a href="https://github.com/tachin-r/Hardware-Component-Knowledge-Base" target="_blank" rel="noopener" class="btn btn-ghost github-link" title="View Source on GitHub">
-          <svg class="gh-svg" viewBox="0 0 16 16" width="18" height="18" fill="currentColor">
+          <svg class="gh-svg" viewBox="0 0 16 16" width="16" height="16" fill="currentColor">
             <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path>
           </svg>
           GitHub
@@ -43,11 +43,11 @@
 
   <!-- Main Container -->
   <main class="main-content">
-    <!-- Hero / Quick Stats -->
+    <!-- Stats Row -->
     <section class="stats-banner">
       <div class="stat-card">
         <span class="stat-value" id="stat-total-parts">0</span>
-        <span class="stat-label">Verified Components</span>
+        <span class="stat-label">Documented Parts & Boards</span>
       </div>
       <div class="stat-card">
         <span class="stat-value highlight-amber" id="stat-total-gotchas">0</span>
@@ -55,7 +55,7 @@
       </div>
       <div class="stat-card">
         <span class="stat-value highlight-cyan" id="stat-bench-verified">100%</span>
-        <span class="stat-label">Bench Tested Findings</span>
+        <span class="stat-label">Bench Verified Findings</span>
       </div>
       <div class="stat-card">
         <span class="stat-value highlight-emerald">4</span>
@@ -72,10 +72,8 @@
         <button id="clear-search" class="clear-btn" style="display: none;">✕</button>
       </div>
 
-      <div class="filters-row">
-        <div class="category-filters" id="category-filters">
-          <!-- Populated by JS -->
-        </div>
+      <div class="category-filters" id="category-filters">
+        <!-- Populated by JS -->
       </div>
 
       <div class="tags-row">
@@ -89,7 +87,7 @@
     <!-- Components Grid -->
     <section class="components-grid-section">
       <div class="section-meta">
-        <h2 class="section-title">Component Knowledge Catalog</h2>
+        <h2 class="section-title">Components & Hardware Boards</h2>
         <span class="results-count" id="results-count">Showing all components</span>
       </div>
 
@@ -100,8 +98,8 @@
       <div id="no-results" class="no-results-state" style="display: none;">
         <span class="empty-icon">🔎</span>
         <h3>No matching components found</h3>
-        <p>Try searching for a different keyword, part number, or clearing your filters.</p>
-        <button id="reset-filters-btn" class="btn btn-secondary">Reset Filters</button>
+        <p>Try searching for a different keyword or resetting your filters.</p>
+        <button id="reset-filters-btn" class="btn btn-secondary" style="margin-top: 0.75rem;">Reset Filters</button>
       </div>
     </section>
   </main>
@@ -121,19 +119,19 @@
     <div class="modal-card form-modal-card" role="dialog" aria-modal="true">
       <button class="modal-close-btn" id="close-add-modal" aria-label="Close modal">✕</button>
       <div class="modal-header">
-        <h2 class="modal-title">Record New Hardware Gotcha ⚡</h2>
-        <p class="modal-subtitle">Add empirical bench findings to your local & long-term knowledge base.</p>
+        <h2 class="modal-title">Add Component or Hardware Board ⚡</h2>
+        <p class="modal-subtitle">Record lab findings, hardware gotchas, and upload photos of chips/boards.</p>
       </div>
 
       <form id="add-gotcha-form" class="gotcha-form">
         <div class="form-grid-2">
           <div class="form-group">
-            <label for="form-part-number">Part Number <span class="required">*</span></label>
-            <input type="text" id="form-part-number" placeholder="e.g. OPA189, TPS7A4700" required>
+            <label for="form-part-number">Part Number / Board Name <span class="required">*</span></label>
+            <input type="text" id="form-part-number" placeholder="e.g. OPA189, L1_Analog Board" required>
           </div>
           <div class="form-group">
-            <label for="form-manufacturer">Manufacturer</label>
-            <input type="text" id="form-manufacturer" placeholder="e.g. Texas Instruments, Analog Devices">
+            <label for="form-manufacturer">Manufacturer / Project</label>
+            <input type="text" id="form-manufacturer" placeholder="e.g. Texas Instruments, Custom PCB">
           </div>
         </div>
 
@@ -147,18 +145,18 @@
               <option value="Power Supply">Power Supply</option>
               <option value="Sensors">Sensors</option>
               <option value="Microcontroller">Microcontroller</option>
-              <option value="Passive">Passive / Discrete</option>
+              <option value="Custom Board">Custom Board / PCB</option>
               <option value="Other">Other</option>
             </select>
           </div>
           <div class="form-group">
-            <label for="form-package">Package</label>
-            <input type="text" id="form-package" placeholder="e.g. SOIC-8, TSSOP-16, 0805">
+            <label for="form-package">Package / Form Factor</label>
+            <input type="text" id="form-package" placeholder="e.g. SOIC-8, Circular 45mm PCB">
           </div>
           <div class="form-group">
             <label for="form-severity">Gotcha Severity</label>
             <select id="form-severity">
-              <option value="Critical">🔴 Critical (Circuit Failure / Loop Instability)</option>
+              <option value="Critical">🔴 Critical (Circuit Failure / Oscillation)</option>
               <option value="High">🟠 High (Measurement Error / Heavy Drift)</option>
               <option value="Warning">🟡 Warning (Subtle Offset / Noise)</option>
               <option value="Info">🔵 Info (Best Practice Note)</option>
@@ -166,8 +164,20 @@
           </div>
         </div>
 
+        <!-- Image Upload Section -->
         <div class="form-group">
-          <label for="form-summary">Component Summary <span class="required">*</span></label>
+          <label>Component / Board Photo (Optional)</label>
+          <div class="image-upload-wrapper">
+            <input type="file" id="form-image-file" accept="image/*" class="file-input">
+            <input type="url" id="form-image-url" placeholder="Or enter an image URL (e.g. https://... or assets/...)">
+            <div class="image-preview-box" id="form-image-preview">
+              <span class="image-preview-placeholder">No image selected</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="form-summary">Summary & Function <span class="required">*</span></label>
           <input type="text" id="form-summary" placeholder="Brief function and application overview..." required>
         </div>
 
@@ -212,7 +222,7 @@
 
         <div class="form-actions">
           <button type="button" class="btn btn-ghost" id="cancel-add-btn">Cancel</button>
-          <button type="submit" class="btn btn-primary">Save to Knowledge Base 💾</button>
+          <button type="submit" class="btn btn-primary">Save to Knowledge Base</button>
         </div>
       </form>
     </div>
@@ -239,8 +249,8 @@
   <!-- Footer -->
   <footer class="app-footer">
     <div class="footer-container">
-      <p>⚡ <strong>Hardware Component Knowledge Base & Lab Gotchas Portal</strong></p>
-      <p class="footer-sub">Created for Empirical Analog, Power & Mixed-Signal Engineering R&D.</p>
+      <p><strong>Hardware Component Knowledge Base & Lab Gotchas Portal</strong></p>
+      <p class="footer-sub">Simple, clean engineering notebook for practical hardware design insights.</p>
     </div>
   </footer>
 
